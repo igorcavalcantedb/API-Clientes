@@ -22,13 +22,7 @@ class RecrutamentoApplicationTests {
 EstadoRepository estadoRepository;
 	@Test
 	void contextLoads() {
-		Cidade cidade = new Cidade();
-		cidade.setId( 1L);
-		Estado estado ;
-				estadoRepository.findBySigla("CE").isPresent() ? estado;
-
-		//assertNotEquals("Nome nao pode ser vazio",null,cidade.getNome());
-		assertEquals("Nome ok","Ceara",estado);
+		
 		
 	}
 	
