@@ -22,18 +22,18 @@ public class ClienteController {
     @Autowired
     ClienteService service;
 
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<HttpEntity> cadastrarCliente(@RequestBody ClienteDTO clienteDTO){
         service.cadastrarCliente(clienteDTO);
         return ResponseEntity.ok().build();
 
 
     }
-    @GetMapping("/")
+    @GetMapping()
     @ApiOperation(value = "Pesquisa de cliente por nome")
-    public Cliente pesquisarClientePorNome(@RequestParam String name) throws ClientNotFoundException{
-    		Optional<Cliente> cliente = service.findByName(name);
-    		if(!cliente.isPresent()) throw new ClientNotFoundException("Name-" + name);
+    public Cliente pesquisarClientePorNome(@RequestParam String nome) throws ClientNotFoundException{
+    		Optional<Cliente> cliente = service.pesquisarPorNome(nome);
+    		if(!cliente.isPresent()) throw new ClientNotFoundException("Nome-" + nome);
     		return cliente.get();
             
     }
@@ -47,11 +47,13 @@ public class ClienteController {
     }
     
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Apagar cliente por ID")
     public void deletarCliente(@PathVariable Long id) {
     	service.deletarClientePorId(id);
     }
     
     @PutMapping(value="/{id}")
+    @ApiOperation(value = "Atualizar Cliente")
     public ResponseEntity update(@PathVariable("id") long id, @RequestBody Cliente cliente) {
        return null;
     }

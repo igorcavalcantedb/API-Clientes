@@ -25,7 +25,7 @@ public class ClienteService {
 		clienteRepository.save(cliente);
 	}
 
-	public Optional<Cliente> findByName(String nome) {
+	public Optional<Cliente> pesquisarPorNome(String nome) {
 		Optional<Cliente> cliente = clienteRepository.findByNome(nome);
 		return cliente;
 
