@@ -1,4 +1,4 @@
-package com.compasso.recrutamento.exceptions;
+package com.compasso.selection.exceptions;
 
 
 

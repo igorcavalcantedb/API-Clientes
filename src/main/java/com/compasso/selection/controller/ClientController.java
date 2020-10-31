@@ -1,9 +1,4 @@
-package com.compasso.recrutamento.controller;
-
-import com.compasso.recrutamento.exceptions.ClientNotFoundException;
-import com.compasso.recrutamento.DTO.ClienteDTO;
-import com.compasso.recrutamento.entity.Cliente;
-import com.compasso.recrutamento.service.ClienteService;
+package com.compasso.selection.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,46 +10,51 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.compasso.selection.DTO.ClientDTO;
+import com.compasso.selection.entity.Client;
+import com.compasso.selection.exceptions.ClientNotFoundException;
+import com.compasso.selection.service.ClientService;
+
 @RestController
-@RequestMapping("/api/v1/cliente")
+@RequestMapping("/api/v1/client")
 @Api(value = "API de Clientes")
-public class ClienteController {
+public class ClientController {
     @Autowired
-    ClienteService service;
+    ClientService service;
 
     @PostMapping()
-    public ResponseEntity<HttpEntity> cadastrarCliente(@RequestBody ClienteDTO clienteDTO){
-        service.cadastrarCliente(clienteDTO);
+    public ResponseEntity<HttpEntity> addClient(@RequestBody ClientDTO clientDTO){
+        service.addClient(clientDTO);
         return ResponseEntity.ok().build();
 
 
     }
     @GetMapping()
-    @ApiOperation(value = "Pesquisa de cliente por nome")
-    public Cliente pesquisarClientePorNome(@RequestParam String nome) throws ClientNotFoundException{
-    		Optional<Cliente> cliente = service.pesquisarPorNome(nome);
-    		if(!cliente.isPresent()) throw new ClientNotFoundException("Nome-" + nome);
-    		return cliente.get();
+    @ApiOperation(value = "Pesquisa de cliente por name")
+    public Client pesquisarClientePorNome(@RequestParam String name) throws ClientNotFoundException{
+    		Optional<Client> client = service.findByName(name);
+    		if(!client.isPresent()) throw new ClientNotFoundException("Name-" + name);
+    		return client.get();
             
     }
     
     @GetMapping("/{id}")
     @ApiOperation(value = "Pesquisa de cliente por ID")
-    public Cliente pesquisarClientePorID(@PathVariable Long id) throws ClientNotFoundException{
-    		Optional<Cliente> cliente = service.pesquisaClientePorID(id);
-    		if(!cliente.isPresent()) throw new ClientNotFoundException("ID-" + id);
-    		return cliente.get();
+    public Client pesquisarClientePorID(@PathVariable Long id) throws ClientNotFoundException{
+    		Optional<Client> client = service.findById(id);
+    		if(!client.isPresent()) throw new ClientNotFoundException("ID-" + id);
+    		return client.get();
     }
     
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Apagar cliente por ID")
-    public void deletarCliente(@PathVariable Long id) {
-    	service.deletarClientePorId(id);
+    public void deleteClient(@PathVariable Long id) {
+    	service.deleteById(id);
     }
     
     @PutMapping(value="/{id}")
     @ApiOperation(value = "Atualizar Cliente")
-    public ResponseEntity update(@PathVariable("id") long id, @RequestBody Cliente cliente) {
+    public ResponseEntity update(@PathVariable("id") long id, @RequestBody Client client) {
        return null;
     }
 }

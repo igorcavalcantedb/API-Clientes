@@ -1,22 +1,30 @@
-package com.compasso.recrutamento.utils;
-import com.compasso.recrutamento.entity.Estado;
-import com.compasso.recrutamento.repository.EstadoRepository;
+package com.compasso.selection.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.compasso.selection.DTO.CityDTO;
+import com.compasso.selection.controller.CityController;
+import com.compasso.selection.entity.State;
+import com.compasso.selection.repository.CityRepository;
+import com.compasso.selection.repository.StateRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 @Configuration
-public class CarregarDados {
-    private static final Logger log = LoggerFactory.getLogger(CarregarDados.class);
+public class LoadData {
+    private static final Logger log = LoggerFactory.getLogger(LoadData.class);
 
     @Bean
-    CommandLineRunner initDatabase(EstadoRepository repository) {
+    CommandLineRunner initDatabase(StateRepository repository, CityController cityController) {
 
         return args -> {
-            log.info("Pre carregamento " + repository.save(new Estado("CE", "Ceará")));
-            log.info("Pre carregamento " + repository.save(new Estado("SC", "Santa Catarina")));
-            log.info("Pre carregamento " + repository.save(new Estado("AC", "Acre" )));
+            log.info("Pre carregamento " + repository.save(new State("CE", "Ceará")));
+            log.info("Pre carregamento " + repository.save(new State("SC", "Santa Catarina")));
+            log.info("Pre carregamento " + repository.save(new State("AC", "Acre" )));
+            cityController.addCity(new CityDTO("Florianópolis", "SC"));
+    		cityController.addCity(new CityDTO("Itajaí", "SC"));
+    		cityController.addCity(new CityDTO("Joinville", "SC"));
         };
     }
 

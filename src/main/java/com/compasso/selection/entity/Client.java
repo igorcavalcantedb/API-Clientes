@@ -1,43 +1,42 @@
-package com.compasso.recrutamento.entity;
+package com.compasso.selection.entity;
 
-import com.compasso.recrutamento.DTO.ClienteDTO;
-import com.compasso.recrutamento.enums.Sexo;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import java.time.LocalDate;
-import java.util.Date;
+import com.compasso.selection.DTO.ClientDTO;
+import com.compasso.selection.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
-public class Cliente {
+public class Client {
     private @Id
     @GeneratedValue
     Long id;
-    private String nome;
-    private Sexo sexo;
+    private String name;
+    private Gender gender;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dataNascimento;
-    private int idade;
+    private LocalDate dateBirth;
+    private int age;
     @ManyToOne
-    private Cidade cidade;
+    private City city;
 
-    public Cliente() {
+    public Client() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-    
-    public Cliente(ClienteDTO clienteDTO , Cidade cidade) {
-    	this.nome = clienteDTO.getNome();
-    	this.sexo= clienteDTO.getSexo();
-    	this.dataNascimento = LocalDate.parse(clienteDTO.getDataNascimento());
-    	this.idade = clienteDTO.getIdade();
-    	this.cidade = cidade;
 
-    	
+    public Client(ClientDTO clientDTO , City city) {
+    	this.name = clientDTO.getName();
+    	this.gender= clientDTO.getGender();
+    	this.dateBirth = LocalDate.parse(clientDTO.getDateBirth());
+    	this.age = clientDTO.getAge();
+    	this.city = city;
+
     }
+
 
 	public Long getId() {
 		return id;
@@ -47,45 +46,46 @@ public class Cliente {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Sexo getSexo() {
-		return sexo;
+	public Gender getGender() {
+		return gender;
 	}
 
-	public void setSexo(Sexo sexo) {
-		this.sexo = sexo;
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
 
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
+	public LocalDate getDateBirth() {
+		return dateBirth;
 	}
 
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setDateBirth(LocalDate dateBirth) {
+		this.dateBirth = dateBirth;
 	}
 
-	public int getIdade() {
-		return idade;
+	public int getAge() {
+		return age;
 	}
 
-	public void setIdade(int idade) {
-		this.idade = idade;
+	public void setAge(int age) {
+		this.age = age;
 	}
 
-	public Cidade getCidade() {
-		return cidade;
+	public City getCity() {
+		return city;
 	}
 
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
+	public void setCity(City city) {
+		this.city = city;
 	}
-
+    
+    
 	
 }

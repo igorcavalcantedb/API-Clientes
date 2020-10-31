@@ -1,48 +1,48 @@
-package com.compasso.recrutamento.service;
-
-import com.compasso.recrutamento.DTO.ClienteDTO;
-import com.compasso.recrutamento.entity.Cliente;
-import com.compasso.recrutamento.repository.CidadeRepository;
-import com.compasso.recrutamento.repository.ClienteRepository;
+package com.compasso.selection.service;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.compasso.recrutamento.entity.Cidade;
+
+import com.compasso.selection.DTO.ClientDTO;
+import com.compasso.selection.entity.City;
+import com.compasso.selection.entity.Client;
+import com.compasso.selection.repository.CityRepository;
+import com.compasso.selection.repository.ClientRepository;
 
 @Service
-public class ClienteService {
+public class ClientService {
 	@Autowired
-	ClienteRepository clienteRepository;
+	ClientRepository clientRepository;
 
 	@Autowired
-	CidadeRepository cidadeRepository;
+	CityRepository cityRepository;
 
-	public void cadastrarCliente(ClienteDTO clienteDTO) {
-		Cidade cidade = cidadeRepository.findByNome(clienteDTO.getCidade());
-		Cliente cliente = new Cliente(clienteDTO, cidade);
-		clienteRepository.save(cliente);
+	public void addClient(ClientDTO clientDTO) {
+		City city = cityRepository.findByName(clientDTO.getCity());
+		Client client = new Client(clientDTO, city);
+		clientRepository.save(client);
 	}
 
-	public Optional<Cliente> pesquisarPorNome(String nome) {
-		Optional<Cliente> cliente = clienteRepository.findByNome(nome);
-		return cliente;
+	public Optional<Client> findByName(String name) {
+		Optional<Client> client = clientRepository.findByName(name);
+		return client;
 
 	}
 
-	public Optional<Cliente> pesquisaClientePorID(Long id) {
-		Optional<Cliente> cliente = clienteRepository.findById(id);
-		return cliente;
+	public Optional<Client> findById(Long id) {
+		Optional<Client> client = clientRepository.findById(id);
+		return client;
 	}
 
-	public void deletarClientePorId(Long id) {
-		clienteRepository.deleteById(id);
+	public void deleteById(Long id) {
+		clientRepository.deleteById(id);
 		
 	}
 
-	public Optional<Cliente> findById(long id) {
-		return clienteRepository.findById(id);
+	public Optional<Client> findById(long id) {
+		return clientRepository.findById(id);
 		
 	}
 }

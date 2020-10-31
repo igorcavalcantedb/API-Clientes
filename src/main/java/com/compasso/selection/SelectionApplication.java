@@ -1,14 +1,14 @@
-package com.compasso.recrutamento;
+package com.compasso.selection;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class RecrutamentoApplication {
+public class SelectionApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RecrutamentoApplication.class, args);
+		SpringApplication.run(SelectionApplication.class, args);
 	}
 
 

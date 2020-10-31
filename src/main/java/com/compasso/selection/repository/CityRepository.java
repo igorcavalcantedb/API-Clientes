@@ -1,15 +1,15 @@
-package com.compasso.recrutamento.repository;
-
-import com.compasso.recrutamento.entity.Cidade;
-import com.compasso.recrutamento.entity.Estado;
+package com.compasso.selection.repository;
 
 import java.util.List;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface CidadeRepository extends PagingAndSortingRepository<Cidade,Long> {
+import com.compasso.selection.entity.City;
+import com.compasso.selection.entity.State;
 
-	Cidade findByNome(String cidade);
+public interface CityRepository extends PagingAndSortingRepository<City,Long> {
 
-	List<Cidade> findByEstado(Estado estado);
+	City findByName(String city);
+
+	List<City> findByState(State state);
 }

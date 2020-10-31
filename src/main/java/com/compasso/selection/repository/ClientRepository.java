@@ -1,13 +1,13 @@
-package com.compasso.recrutamento.repository;
+package com.compasso.selection.repository;
 
-
-import com.compasso.recrutamento.entity.Cliente;
 
 import java.util.Optional;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface ClienteRepository extends PagingAndSortingRepository<Cliente, Long> {
+import com.compasso.selection.entity.Client;
 
-	Optional<Cliente> findByNome(String nome);
+public interface ClientRepository extends PagingAndSortingRepository<Client, Long> {
+
+	Optional<Client> findByName(String name);
 }

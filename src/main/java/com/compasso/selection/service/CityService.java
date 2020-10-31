@@ -1,48 +1,68 @@
-package com.compasso.recrutamento.service;
+package com.compasso.selection.service;
 
-import com.compasso.recrutamento.DTO.CidadeDTO;
-import com.compasso.recrutamento.entity.Cidade;
-import com.compasso.recrutamento.entity.Estado;
-import com.compasso.recrutamento.repository.CidadeRepository;
-import com.compasso.recrutamento.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.compasso.selection.DTO.CityDTO;
+import com.compasso.selection.entity.City;
+import com.compasso.selection.entity.State;
+import com.compasso.selection.repository.CityRepository;
+import com.compasso.selection.repository.StateRepository;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
-public class CidadeService {
+public class CityService {
     @Autowired
-    private CidadeRepository cidadeRepository;
+    private CityRepository cityRepository;
     @Autowired
-    private EstadoRepository estadoRepository;
+    private StateRepository stateRepository;
 
-    public Iterable<Cidade> listarTodasCidades(){
-        return cidadeRepository.findAll();
+    public Iterable<City> findAllCities(){
+        return cityRepository.findAll();
     }
 
-    public void adicionarCidade(CidadeDTO cidadeDto) {
-        Optional<Estado> estadoOptional = estadoRepository.findBySigla(cidadeDto.getSiglaEstado());
+    public void addCity(CityDTO cidadeDto) {
+        Optional<State> estadoOptional = stateRepository.findByCode(cidadeDto.getCode());
         //Todo Tratar o erro se nao retornar nenhum estado
-        Estado estado = estadoOptional.get();
-        Cidade cidade = new Cidade(cidadeDto.getNome(),estado);
-        cidadeRepository.save(cidade);
+        if(estadoOptional.isPresent()) {
+        	State state = estadoOptional.get();
+        	if (isCityinThisState(cidadeDto.getName(),state)){
+        		City city = new City(cidadeDto.getName(),state);
+                cityRepository.save(city);
+        	}
+        	 
+            
+        }
+       
     }
     
-    public Cidade pesquisaCidadePorNome(String nome) {
-     	return cidadeRepository.findByNome(nome);
+    public City findByName(String name) {
+     	return cityRepository.findByName(name);
 	  	
     }
     
-	public List<Cidade> pesquisarPorEstado(String siglaEstado){
-		Optional<Estado> estadoOptional = estadoRepository.findBySigla(siglaEstado);
+	public List<City> findByState(String code){
+		Optional<State> estadoOptional = stateRepository.findByCode(code);
         //Todo Tratar o erro se nao retornar nenhum estado
-        Estado estado = estadoOptional.get();
-        List<Cidade> cidades = cidadeRepository.findByEstado(estado);
-		return cidades;
+        State state = estadoOptional.get();
+        List<City> cities = cityRepository.findByState(state);
+		return cities;
 		
+		
+	}
+	
+	private boolean isCityinThisState(String nameCity,State state) {
+		boolean anyMatch = cityRepository.findByState(state).stream().anyMatch(cidade -> cidade.getName().equals(nameCity));
+		return anyMatch ?  true : false; 
+		
+	}
+
+	public void deleteById(Long id) {
+		cityRepository.deleteById(id);
 		
 	}
 }

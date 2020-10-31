@@ -1,22 +1,47 @@
-package com.compasso.recrutamento.DTO;
+package com.compasso.selection.DTO;
 
-public class CidadeDTO {
-    String nome;
-    String siglaEstado;
+public class CityDTO {
+    String name;
+    String code;
+    
+    
 
-    public String getNome() {
-        return nome;
-    }
+    public CityDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
-    public String getSiglaEstado() {
-        return siglaEstado;
-    }
 
-    public void setSiglaEstado(String siglaEstado) {
-        this.siglaEstado = siglaEstado;
-    }
+	public CityDTO(String name, String code) {
+		super();
+		this.name = name;
+		this.code = code;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	
 }

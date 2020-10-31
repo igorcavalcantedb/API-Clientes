@@ -1,5 +1,5 @@
-package com.compasso.recrutamento.enums;
+package com.compasso.selection.enums;
 
-public enum Sexo {
-    MASCULINO, FEMININO, OUTRO,
+public enum Gender {
+    MALE, FEMALE, OTHER,
 }

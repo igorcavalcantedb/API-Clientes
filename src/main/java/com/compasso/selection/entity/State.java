@@ -1,4 +1,4 @@
-package com.compasso.recrutamento.entity;
+package com.compasso.selection.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,61 +13,63 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 @Entity
-public class Estado {
+public class State {
     private @Id @GeneratedValue Long id;
     
     @Column
     @NotNull
     @Size(max = 2)
-    private String sigla;
+    private String code;
     @Column
     @NotNull
     @Size(max = 50)
-    private String nome;
+    private String name;
     
-    @OneToMany(mappedBy="estado")
-    private List<Cidade> cidades;
+    @OneToMany(mappedBy="state")
+    private List<City> cities;
     
 
-    public Estado() {
+    public State() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Estado(String sigla, String nome) {
-        this.sigla = sigla;
-        this.nome = nome;
+	public State(String code, String name) {
+        this.code = code;
+        this.name = name;
     }
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getSigla() {
-        return sigla;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<Cidade> getCidades() {
-        return cidades;
-    }
+	public List<City> getCities() {
+		return cities;
+	}
 
-    public void setCidades(List<Cidade> cidades) {
-        this.cidades = cidades;
-    }
+	public void setCities(List<City> cities) {
+		this.cities = cities;
+	}
+
+   
 }

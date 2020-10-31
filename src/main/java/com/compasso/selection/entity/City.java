@@ -1,4 +1,4 @@
-package com.compasso.recrutamento.entity;
+package com.compasso.selection.entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-public class Cidade {
+public class City {
     private @Id
     @GeneratedValue
     Long id;
@@ -15,43 +15,54 @@ public class Cidade {
     @Column
     @NotNull
     @Size(max = 100)
-    private String nome;
+    
+    private String name;
     @JsonIgnore
     @ManyToOne
-    private Estado estado;
+    private State state;
     
 
-    public Cidade() {
+    public City() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cidade(String nome, Estado estado) {
-        this.nome = nome;
-        this.estado = estado;
-    }
 
-    public Long getId() {
-        return id;
-    }
+	public City(@NotNull @Size(max = 100) String name, State state) {
+		super();
+		this.name = name;
+		this.state = state;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getNome() {
-        return nome;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
-    public Estado getEstado() {
-        return estado;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public State getState() {
+		return state;
+	}
+
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	
 }

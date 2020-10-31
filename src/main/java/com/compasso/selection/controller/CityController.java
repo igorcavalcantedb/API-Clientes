@@ -1,8 +1,4 @@
-package com.compasso.recrutamento.controller;
-
-import com.compasso.recrutamento.DTO.CidadeDTO;
-import com.compasso.recrutamento.entity.Cidade;
-import com.compasso.recrutamento.service.CidadeService;
+package com.compasso.selection.controller;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -11,36 +7,45 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.compasso.selection.DTO.CityDTO;
+import com.compasso.selection.entity.City;
+import com.compasso.selection.service.CityService;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/cidade")
-public class CidadeController {
+@RequestMapping("/api/v1/city")
+public class CityController {
 	@Autowired
-	private CidadeService service;
+	private CityService service;
 
-	@GetMapping("/todas")
+	@GetMapping("/all")
 	@ApiOperation(value = "Listar todas as cidades ")
-	public Iterable<Cidade> listarTodasCidades() {
-		return service.listarTodasCidades();
+	public Iterable<City> listarTodasCidades() {
+		return service.findAllCities();
 	}
 
 	@ApiOperation(value = "Adicionar Cidade à Estado(UF) ")
 	@PostMapping()
-	public ResponseEntity<HttpEntity> adicionarCidade(@RequestBody CidadeDTO cidade) {
-		service.adicionarCidade(cidade);
+	public ResponseEntity<HttpEntity> addCity(@RequestBody CityDTO cidade) {
+		service.addCity(cidade);
 		return ResponseEntity.ok().build();
 	}
 
-	@ApiOperation(value = "Pesquisar cidade por nome ")
-	@GetMapping("/{nome}")
-	public Cidade pesquisarCidadePorNome(@PathVariable String nome) {
-		return service.pesquisaCidadePorNome(nome);
+	@ApiOperation(value = "Pesquisar cidade por name ")
+	@GetMapping("/{name}")
+	public City findCityByName(@PathVariable String name) {
+		return service.findByName(name);
 	}
 
 	@ApiOperation(value = "Listar as cidade de um Estado(UF) ")
 	@GetMapping()
-	public List<Cidade> pesquisarCidadePorEstado(@RequestParam String uf) {
-		return service.pesquisarPorEstado(uf);
+	public List<City> findCityByState(@RequestParam String code) {
+		return service.findByState(code);
 	}
+	@DeleteMapping("/{id}")
+    @ApiOperation(value = "Apagar Cidade por ID")
+    public void deleteCity(@PathVariable Long id) {
+    	service.deleteById(id);
+    }
 }
