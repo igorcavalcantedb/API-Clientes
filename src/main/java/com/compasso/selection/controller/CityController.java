@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.compasso.selection.DTO.CityDTO;
 import com.compasso.selection.entity.City;
+import com.compasso.selection.exceptions.CityAlreadyExistsException;
+import com.compasso.selection.exceptions.StateNotFoundException;
 import com.compasso.selection.service.CityService;
 
 import java.util.List;
@@ -27,7 +29,7 @@ public class CityController {
 
 	@ApiOperation(value = "Adicionar Cidade à Estado(UF) ")
 	@PostMapping()
-	public ResponseEntity<HttpEntity> addCity(@RequestBody CityDTO cidade) {
+	public ResponseEntity<HttpEntity> addCity(@RequestBody CityDTO cidade) throws CityAlreadyExistsException, StateNotFoundException {
 		service.addCity(cidade);
 		return ResponseEntity.ok().build();
 	}
@@ -40,12 +42,13 @@ public class CityController {
 
 	@ApiOperation(value = "Listar as cidade de um Estado(UF) ")
 	@GetMapping()
-	public List<City> findCityByState(@RequestParam String code) {
+	public List<City> findCityByState(@RequestParam String code) throws StateNotFoundException {
 		return service.findByState(code);
 	}
 	@DeleteMapping("/{id}")
     @ApiOperation(value = "Apagar Cidade por ID")
-    public void deleteCity(@PathVariable Long id) {
+    public ResponseEntity<HttpEntity> deleteCity(@PathVariable Long id) {
     	service.deleteById(id);
+    	return ResponseEntity.ok().build();
     }
 }

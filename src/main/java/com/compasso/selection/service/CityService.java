@@ -1,18 +1,18 @@
 package com.compasso.selection.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.compasso.selection.DTO.CityDTO;
 import com.compasso.selection.entity.City;
 import com.compasso.selection.entity.State;
+import com.compasso.selection.exceptions.CityAlreadyExistsException;
+import com.compasso.selection.exceptions.StateNotFoundException;
 import com.compasso.selection.repository.CityRepository;
 import com.compasso.selection.repository.StateRepository;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class CityService {
@@ -25,17 +25,22 @@ public class CityService {
         return cityRepository.findAll();
     }
 
-    public void addCity(CityDTO cidadeDto) {
-        Optional<State> estadoOptional = stateRepository.findByCode(cidadeDto.getCode());
-        //Todo Tratar o erro se nao retornar nenhum estado
-        if(estadoOptional.isPresent()) {
-        	State state = estadoOptional.get();
+    public void addCity(CityDTO cidadeDto) throws CityAlreadyExistsException, StateNotFoundException {
+          Optional<State> stateOptional = stateRepository.findByCode(cidadeDto.getCode());
+         
+        if(!stateOptional.isPresent()) {
+        	 throw new StateNotFoundException("Code = "+ cidadeDto.getCode());
+        }
+        else {
+        	State state = stateOptional.get();
         	if (isCityinThisState(cidadeDto.getName(),state)){
+        		throw new CityAlreadyExistsException("City = " + cidadeDto.getName());
+        	}
+        	else {
         		City city = new City(cidadeDto.getName(),state);
                 cityRepository.save(city);
         	}
-        	 
-            
+        	
         }
        
     }
@@ -45,10 +50,13 @@ public class CityService {
 	  	
     }
     
-	public List<City> findByState(String code){
-		Optional<State> estadoOptional = stateRepository.findByCode(code);
+	public List<City> findByState(String code) throws StateNotFoundException{
+		Optional<State> stateOptional = stateRepository.findByCode(code);
         //Todo Tratar o erro se nao retornar nenhum estado
-        State state = estadoOptional.get();
+		if(!stateOptional.isPresent()) {
+			throw new StateNotFoundException("Code =" + code);
+		}
+        State state = stateOptional.get();
         List<City> cities = cityRepository.findByState(state);
 		return cities;
 		

@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 
 import com.compasso.selection.DTO.ClientDTO;
 import com.compasso.selection.enums.Gender;
@@ -15,10 +19,14 @@ public class Client {
     private @Id
     @GeneratedValue
     Long id;
+    @NotBlank(message = "Name must be valid")
     private String name;
     private Gender gender;
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @Past
     private LocalDate dateBirth;
+    @Min(value = 5, message = "The age shold be more then 5")
+    @Max(value = 120, message ="The age shold be less then 120")
     private int age;
     @ManyToOne
     private City city;
